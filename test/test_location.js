@@ -55,11 +55,8 @@ contract("LocationContract", accounts => {
     }
 
     it('should add location #1', async() => {
-        let taskFn = 'add_location(int32,int32)';
-        let taskArgs = [
-            [location1, 'int32'],
-            [0, 'int32'],
-        ];
+        let taskFn = 'add_location(string)';
+        let taskArgs = [[JSON.stringify([{latitude: location1, longitude: 0}]), 'string']];
         let taskGasLimit = 500000;
         let taskGasPx = utils.toGrains(1);
         task = await new Promise((resolve, reject) => {
@@ -71,11 +68,8 @@ contract("LocationContract", accounts => {
     });
 
     it('should add location #2', async() => {
-        let taskFn = 'add_location(int32,int32)';
-        let taskArgs = [
-            [location2, 'int32'],
-            [30000000, 'int32'],
-        ];
+        let taskFn = 'add_location(string)';
+        let taskArgs = [[JSON.stringify([{latitude: location2, longitude: 30000000}]), 'string']];
         let taskGasLimit = 500000;
         let taskGasPx = utils.toGrains(1);
         task = await new Promise((resolve, reject) => {
@@ -90,6 +84,9 @@ contract("LocationContract", accounts => {
         let taskFn = 'cluster()';
         let taskArgs = [];
         let taskGasLimit = 500000;
+        // let taskFn = 'cluster(int32)';
+        // let taskArgs = [[1, 'int32']];
+        // let taskGasLimit = 10000000;
         let taskGasPx = utils.toGrains(1);
         task = await new Promise((resolve, reject) => {
             enigma.computeTask(taskFn, taskArgs, taskGasLimit, taskGasPx, accounts[0], contractAddr)
